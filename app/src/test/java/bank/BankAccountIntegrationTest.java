@@ -24,7 +24,41 @@ public class BankAccountIntegrationTest {
         Assert.assertEquals(
                 """
                         date || credit || debit || balance
-                        10/01/2021 || 1000.00 || - || 1000.00\
+                        10/01/2021 || 1000.00 || - || 1000.00
+                        """,
+                bankAccount.generateStatement()
+        );
+    }
+
+    @Test
+    public void testGenerateStatementListsMultipleDepositsAndTracksBalance() {
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.deposit(1000, LocalDate.of(2021, 1, 10));
+        bankAccount.deposit(2000, LocalDate.of(2021, 1, 11));
+        bankAccount.deposit(3000, LocalDate.of(2021, 1, 12));
+        Assert.assertEquals(
+                """
+                        date || credit || debit || balance
+                        12/01/2021 || 3000.00 || - || 6000.00
+                        11/01/2021 || 2000.00 || - || 3000.00
+                        10/01/2021 || 1000.00 || - || 1000.00
+                        """,
+                bankAccount.generateStatement()
+        );
+    }
+
+    @Test
+    public void testGenerateStatementreturnsCorrectOrderWhenDepositsOutOfOrder() {
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.deposit(3000, LocalDate.of(2021, 1, 12));
+        bankAccount.deposit(1000, LocalDate.of(2021, 1, 10));
+        bankAccount.deposit(2000, LocalDate.of(2021, 1, 11));
+        Assert.assertEquals(
+                """
+                        date || credit || debit || balance
+                        12/01/2021 || 3000.00 || - || 6000.00
+                        11/01/2021 || 2000.00 || - || 3000.00
+                        10/01/2021 || 1000.00 || - || 1000.00
                         """,
                 bankAccount.generateStatement()
         );
