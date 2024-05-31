@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 
-public class BankAccountTest {
+public class BankAccountIntegrationTest {
     @Test
     public void testGenerateStatementReturnsHeaderWhenNoTransactions() {
         BankAccount bankAccount = new BankAccount();
@@ -24,7 +24,7 @@ public class BankAccountTest {
         Assert.assertEquals(
                 """
                         date || credit || debit || balance
-                        10/01/2021 || 1000.00 || - || 1000.00
+                        10/01/2021 || 1000.00 || - || 1000.00\
                         """,
                 bankAccount.generateStatement()
         );
