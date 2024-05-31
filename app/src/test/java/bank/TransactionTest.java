@@ -7,16 +7,16 @@ import java.time.LocalDate;
 
 public class TransactionTest {
     @Test
-    public void testGetAmountReturnsAmount() {
+    public void testAmountReturnsAmount() {
         Transaction transaction = new Transaction(1000, LocalDate.of(2021, 1, 10));
-        Assert.assertEquals(1000, (int) transaction.getAmount());
+        Assert.assertEquals(1000, (int) transaction.amount());
     }
 
     @Test
-    public void testGetDateReturnsDate() {
+    public void testDateReturnsDate() {
         Transaction transaction = new Transaction(1000, LocalDate.of(2021, 1, 10));
         LocalDate date = LocalDate.of(2021, 1, 10);
-        Assert.assertEquals(date, transaction.getDate());
+        Assert.assertEquals(date, transaction.date());
     }
 
     @Test

@@ -24,10 +24,10 @@ public class BankAccount {
         Integer balance = 0;
 
         for (Transaction transaction : this.transactions) {
-            Integer amount = transaction.getAmount();
+            Integer amount = transaction.amount();
             balance += amount;
 
-            String formattedDate = transaction.getDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
+            String formattedDate = transaction.date().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
             String formattedAmount = amount + ".00";
             String formattedBalance = balance + ".00";
 
