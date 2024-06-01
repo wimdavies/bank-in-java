@@ -20,7 +20,7 @@ public class BankAccount {
         // Sort transactions in chronological order
         Collections.sort(this.transactions);
 
-        ArrayList<String> lines = new ArrayList<>();
+        ArrayList<String> statementLines = new ArrayList<>();
         Integer balance = 0;
 
         for (Transaction transaction : this.transactions) {
@@ -28,25 +28,30 @@ public class BankAccount {
             balance += amount;
 
             String formattedDate = transaction.date().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
-            String formattedAmount = amount + ".00";
+            String formattedAmount = Math.abs(amount) + ".00";
             String formattedBalance = balance + ".00";
 
             String line = String.format("%s || %s || %s || %s\n",
                     formattedDate,
-                    formattedAmount,
-                    "-",
+                    (amount > 0 ? formattedAmount : "-"),
+                    (amount < 0 ? formattedAmount : "-"),
                     formattedBalance
             );
-            lines.add(line);
+            statementLines.add(line);
         }
 
-        Collections.reverse(lines);
+        Collections.reverse(statementLines);
 
-        return header + String.join("", lines);
+        return header + String.join("", statementLines);
     }
 
     public void deposit(Integer amount, LocalDate date) {
         Transaction transaction = new Transaction(amount, date);
+        this.transactions.add(transaction);
+    }
+
+    public void withdraw(Integer amount, LocalDate date) {
+        Transaction transaction = new Transaction(-amount, date);
         this.transactions.add(transaction);
     }
 
