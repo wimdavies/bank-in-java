@@ -93,4 +93,21 @@ public class BankAccountIntegrationTest {
                 bankAccount.generateStatement()
         );
     }
+
+    @Test
+    public void testGenerateStatementReturnsTheAcceptanceExample() {
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.deposit(1000, LocalDate.of(2021, 1, 10));
+        bankAccount.deposit(2000, LocalDate.of(2021, 1, 13));
+        bankAccount.withdraw(500, LocalDate.of(2021, 1, 14));
+        Assert.assertEquals(
+                """
+                        date || credit || debit || balance
+                        14/01/2021 || - || 500.00 || 2500.00
+                        13/01/2021 || 2000.00 || - || 3000.00
+                        10/01/2021 || 1000.00 || - || 1000.00
+                        """,
+                bankAccount.generateStatement()
+        );
+    }
 }
