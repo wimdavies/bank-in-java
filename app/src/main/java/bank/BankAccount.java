@@ -1,5 +1,7 @@
 package bank;
 
+import bank.exceptions.InvalidDepositAmountException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -45,7 +47,10 @@ public class BankAccount {
         return header + String.join("", statementLines);
     }
 
-    public void deposit(Integer amount, LocalDate date) {
+    public void deposit(Integer amount, LocalDate date) throws InvalidDepositAmountException {
+        if (amount <= 0) {
+            throw new InvalidDepositAmountException("Deposit amounts must be greater than zero.");
+        }
         Transaction transaction = new Transaction(amount, date);
         this.transactions.add(transaction);
     }

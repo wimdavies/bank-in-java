@@ -1,5 +1,7 @@
 package bank;
 
+import bank.exceptions.BankAccountException;
+import bank.exceptions.InvalidDepositAmountException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -7,7 +9,7 @@ import java.time.LocalDate;
 
 public class BankAccountIntegrationTest {
     @Test
-    public void testGenerateStatementListsOneDeposit() {
+    public void testGenerateStatementListsOneDeposit() throws BankAccountException {
         BankAccount bankAccount = new BankAccount();
         bankAccount.deposit(1000, LocalDate.of(2021, 1, 10));
         Assert.assertEquals(
@@ -20,7 +22,7 @@ public class BankAccountIntegrationTest {
     }
 
     @Test
-    public void testGenerateStatementListsMultipleDepositsAndTracksBalance() {
+    public void testGenerateStatementListsMultipleDepositsAndTracksBalance() throws BankAccountException {
         BankAccount bankAccount = new BankAccount();
         bankAccount.deposit(1000, LocalDate.of(2021, 1, 10));
         bankAccount.deposit(2000, LocalDate.of(2021, 1, 11));
@@ -37,7 +39,7 @@ public class BankAccountIntegrationTest {
     }
 
     @Test
-    public void testGenerateStatementReturnsCorrectOrderWhenDepositsOutOfOrder() {
+    public void testGenerateStatementReturnsCorrectOrderWhenDepositsOutOfOrder() throws BankAccountException {
         BankAccount bankAccount = new BankAccount();
         bankAccount.deposit(3000, LocalDate.of(2021, 1, 12));
         bankAccount.deposit(1000, LocalDate.of(2021, 1, 10));
@@ -54,7 +56,7 @@ public class BankAccountIntegrationTest {
     }
 
     @Test
-    public void testGenerateStatementListsOneWithdrawal() {
+    public void testGenerateStatementListsOneWithdrawal() throws BankAccountException {
         BankAccount bankAccount = new BankAccount();
         bankAccount.withdraw(1000, LocalDate.of(2021, 1, 10));
         Assert.assertEquals(
@@ -67,7 +69,7 @@ public class BankAccountIntegrationTest {
     }
 
     @Test
-    public void testGenerateStatementListsMultipleWithdrawalsAndTracksBalance() {
+    public void testGenerateStatementListsMultipleWithdrawalsAndTracksBalance() throws BankAccountException {
         BankAccount bankAccount = new BankAccount();
         bankAccount.withdraw(1000, LocalDate.of(2021, 1, 10));
         bankAccount.withdraw(2000, LocalDate.of(2021, 1, 11));
@@ -84,7 +86,7 @@ public class BankAccountIntegrationTest {
     }
 
     @Test
-    public void testGenerateStatementReturnsTheAcceptanceExample() {
+    public void testGenerateStatementReturnsTheAcceptanceExample() throws BankAccountException {
         BankAccount bankAccount = new BankAccount();
         bankAccount.deposit(1000, LocalDate.of(2021, 1, 10));
         bankAccount.deposit(2000, LocalDate.of(2021, 1, 13));
