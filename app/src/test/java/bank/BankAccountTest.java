@@ -1,6 +1,7 @@
 package bank;
 
 import bank.exceptions.InvalidDepositAmountException;
+import bank.exceptions.InvalidWithdrawAmountException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,5 +23,11 @@ public class BankAccountTest {
     public void testDepositThrowsForAmountsLessThanOrEqualToZero() throws InvalidDepositAmountException {
         BankAccount bankAccount = new BankAccount();
         bankAccount.deposit(0, LocalDate.of(2021, 1, 10));
+    }
+
+    @Test(expected = InvalidWithdrawAmountException.class)
+    public void testWithdrawThrowsForAmountsGreaterThanOrEqualToZero() throws InvalidWithdrawAmountException {
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.withdraw(0, LocalDate.of(2021, 1, 10));
     }
 }
