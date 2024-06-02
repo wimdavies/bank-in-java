@@ -1,5 +1,7 @@
 package bank;
 
+import bank.exceptions.BankAccountException;
+import bank.exceptions.InvalidDateException;
 import bank.exceptions.InvalidDepositAmountException;
 import bank.exceptions.InvalidWithdrawAmountException;
 
@@ -48,17 +50,23 @@ public class BankAccount {
         return header + String.join("", statementLines);
     }
 
-    public void deposit(Integer amount, LocalDate date) throws InvalidDepositAmountException {
+    public void deposit(Integer amount, LocalDate date) throws BankAccountException {
         if (amount <= 0) {
             throw new InvalidDepositAmountException("Deposit amounts must be greater than zero.");
+        }
+        if (date.isAfter(LocalDate.now())) {
+            throw new InvalidDateException("Transactions may not take place in the future.");
         }
         Transaction transaction = new Transaction(amount, date);
         this.transactions.add(transaction);
     }
 
-    public void withdraw(Integer amount, LocalDate date) throws InvalidWithdrawAmountException {
+    public void withdraw(Integer amount, LocalDate date) throws BankAccountException {
         if (amount <= 0) {
             throw new InvalidWithdrawAmountException("Withdrawal amounts must be greater than zero.");
+        }
+        if (date.isAfter(LocalDate.now())) {
+            throw new InvalidDateException("Transactions may not take place in the future.");
         }
         Transaction transaction = new Transaction(-amount, date);
         this.transactions.add(transaction);
