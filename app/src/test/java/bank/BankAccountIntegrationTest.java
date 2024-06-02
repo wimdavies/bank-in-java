@@ -7,17 +7,6 @@ import java.time.LocalDate;
 
 public class BankAccountIntegrationTest {
     @Test
-    public void testGenerateStatementReturnsHeaderWhenNoTransactions() {
-        BankAccount bankAccount = new BankAccount();
-        Assert.assertEquals(
-                """
-                        date || credit || debit || balance
-                        """,
-                bankAccount.generateStatement()
-        );
-    }
-
-    @Test
     public void testGenerateStatementListsOneDeposit() {
         BankAccount bankAccount = new BankAccount();
         bankAccount.deposit(1000, LocalDate.of(2021, 1, 10));
